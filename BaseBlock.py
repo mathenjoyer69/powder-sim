@@ -13,3 +13,4 @@ class BaseBlock:
 
     def draw(self,screen):
         pygame.draw.rect(screen,self.color,(self.x,self.y,self.size,self.size))
+        print(3)
