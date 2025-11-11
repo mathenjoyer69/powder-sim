@@ -29,6 +29,8 @@ class Simulation:
         self.button = Button(0, 0, 40, 40, True, (120, 120, 120))
         self.button1 = Button(100, 0, 40, 40, True, (222, 186, 69))
         self.button2 = Button(200, 0, 40, 40, True, (120, 120, 120))
+        self.clock = pygame.time.Clock()
+        self.clock.tick(60)
 
     def update(self):
         if self.button.variable:
