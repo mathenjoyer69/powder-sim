@@ -14,7 +14,7 @@ class Simulation:
         for i in range(n, -1, -1):
             for j in range(n):
                 block = self.matrix[i][j]
-                block.update()
+                block.update(self.matrix)
 
     def draw(self, surface):
         surface.fill((0, 0, 0))
