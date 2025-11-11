@@ -2,6 +2,12 @@ import pygame
 import BaseBlock
 
 
-class AirBlock(BaseBlock):
-    def __init__(self, x, y, size):
-        super.__init__(self,x,y,size, 0)
+class AirBlock(BaseBlock.BaseBlock):
+    def __init__(self, x, y, color, type):
+        super().__init__(x, y, color, type)
+
+    def update(self, matrix):
+        pass
+
+    def draw(self, surface):
+        pygame.draw.rect(surface, self.color, self.rect)

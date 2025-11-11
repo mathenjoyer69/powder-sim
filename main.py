@@ -1,5 +1,7 @@
 import pygame
 import numpy as np
+import AirBlock
+import StoneBlock
 
 class Simulation:
     def __init__(self, screen, width, height, speed, matrix):
@@ -23,8 +25,14 @@ class Simulation:
                 block = self.matrix[i][j]
                 block.draw(surface)
 
-    def add_block(self, type):
-         pass
+    def add_block(self, type, pos):
+        list_x = pos[0]
+        list_y = pos[1]
+        if type == 1:
+            self.matrix[list_y][list_x] = StoneBlock.StoneBlock(list_x*20, list_y*20, type)
+
+    def get_mouse_index(self, mouse_pos):
+        return int(mouse_pos[0]/20), int(mouse_pos[1]/20)
 
     def run(self):
         running = True
@@ -33,15 +41,16 @@ class Simulation:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
-                        self.add_block(1)
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        self.add_block(1, self.get_mouse_index(pygame.mouse.get_pos()))
             pygame.display.flip()
 
 def main():
     pygame.init()
     screen = pygame.display.set_mode((800, 800))
-    matrix =  np.zeros((int(800/20), int(800/20)))
+    matrix =  [[AirBlock.AirBlock(i*20, j*20, (0, 0, 0), 0) for i in range(40)] for j in range(40)]
+
     sim = Simulation(screen, 800, 800, 0.1, matrix)
     sim.run()
 
