@@ -33,6 +33,7 @@ class Simulation:
         self.clock.tick(60)
         self.update_interval = 100
         self.last_update_time = 0
+        self.update_hold = 50
 
     def update(self):
         current_time = pygame.time.get_ticks()
@@ -59,13 +60,17 @@ class Simulation:
         self.button.draw(surface)
 
     def add_block(self, b_type, pos):
-        list_x = pos[0]
-        list_y = pos[1]
-        if b_type == 1:
-            self.matrix[list_y][list_x] = StoneBlock.StoneBlock(list_x * 20, list_y * 20, b_type)
-        if b_type == 2:
-            print(pos)
-            self.matrix[list_y][list_x] = SandBlock.SandBlock(list_x * 20, list_y * 20, b_type)
+        if self.matrix[pos[1]][pos[0]].type == 0:
+            current_time = pygame.time.get_ticks()
+            if current_time - self.last_update_time >= self.update_hold:
+                self.last_update_time = current_time
+                list_x = pos[0]
+                list_y = pos[1]
+                if b_type == 1:
+                    self.matrix[list_y][list_x] = StoneBlock.StoneBlock(list_x * 20, list_y * 20, b_type)
+                if b_type == 2:
+                    print(pos)
+                    self.matrix[list_y][list_x] = SandBlock.SandBlock(list_x * 20, list_y * 20, b_type)
 
     @staticmethod
     def get_mouse_index(mouse_pos):
@@ -73,6 +78,7 @@ class Simulation:
 
     def run(self):
         running = True
+        mouse_held = False
         while running:
             self.update()
             self.draw(self.screen)
@@ -81,6 +87,7 @@ class Simulation:
                     running = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1:
+                        mouse_held = True
                         if self.button.is_over(pygame.mouse.get_pos()):
                             self.button.variable = not self.button.variable
                         if self.button.variable:
@@ -94,16 +101,25 @@ class Simulation:
                                 self.button.original_color = self.button2.color
                                 self.type = 1
 
+                if event.type == pygame.MOUSEBUTTONUP:
+                    if event.button == 1:
+                        mouse_held = False
+
+            if mouse_held and self.button.variable:
+                mouse_pos = pygame.mouse.get_pos()
+                list_x, list_y = self.get_mouse_index(mouse_pos)
+                if 0 <= list_x < len(self.matrix[0]) and 0 <= list_y < len(self.matrix):
+                    self.add_block(self.type, (list_x, list_y))
 
 
             pygame.display.flip()
 
 def main():
     pygame.init()
-    screen = pygame.display.set_mode((800, 800))
-    matrix =  [[AirBlock.AirBlock(i*20, j*20, (0, 0, 0), 0) for i in range(40)] for j in range(40)]
+    screen = pygame.display.set_mode((600, 600))
+    matrix =  [[AirBlock.AirBlock(i*20, j*20, (0, 0, 0), 0) for i in range(30)] for j in range(30)]
 
-    sim = Simulation(screen, 800, 800, 0.1, matrix)
+    sim = Simulation(screen, 600, 600, 0.1, matrix)
     sim.run()
 
 main()

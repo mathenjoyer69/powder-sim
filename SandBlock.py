@@ -27,13 +27,13 @@ class SandBlock(BaseBlock.BaseBlock):
             return matrix
 
             # try down-left
-        if y < max_y and x > 0 and matrix[y + 1][x - 1].type == 0:
-            move_to(x, y + 1)
+        elif y < max_y and x > 0 and matrix[y + 1][x-1].type == 0:
+            move_to(x-1, y + 1)
             return matrix
 
             # try down-right
-        if y < max_y and x < max_x and matrix[y + 1][x + 1].type == 0:
-            move_to(x, y + 1)
+        elif y < max_y and x < max_x and matrix[y + 1][x + 1].type == 0:
+            move_to(x+1, y + 1)
             return matrix
 
         return matrix
