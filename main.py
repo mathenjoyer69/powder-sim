@@ -91,7 +91,8 @@ class Simulation:
                         mouse_held = True
                         if self.button.is_over(pygame.mouse.get_pos()):
                             self.button.variable = not self.button.variable
-                        if self.button.variable:
+                        if self.button.variable and not self.button.is_over(pygame.mouse.get_pos()):
+                            print("Button pressed")
                             self.add_block(self.type, self.get_mouse_index(pygame.mouse.get_pos()))
                         else:
                             #sand button
@@ -106,7 +107,7 @@ class Simulation:
                     if event.button == 1:
                         mouse_held = False
 
-            if mouse_held and self.button.variable:
+            if mouse_held and self.button.variable and not self.button.is_over(pygame.mouse.get_pos()):
                 mouse_pos = pygame.mouse.get_pos()
                 list_x, list_y = self.get_mouse_index(mouse_pos)
                 if 0 <= list_x < len(self.matrix[0]) and 0 <= list_y < len(self.matrix):
