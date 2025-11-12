@@ -34,6 +34,7 @@ class Simulation:
         self.update_interval = 100
         self.last_update_time = 0
         self.update_hold = 50
+        self.last_update_time_hold = 0
 
     def update(self):
         current_time = pygame.time.get_ticks()
@@ -62,8 +63,8 @@ class Simulation:
     def add_block(self, b_type, pos):
         if self.matrix[pos[1]][pos[0]].type == 0:
             current_time = pygame.time.get_ticks()
-            if current_time - self.last_update_time >= self.update_hold:
-                self.last_update_time = current_time
+            if current_time - self.last_update_time_hold >= self.update_hold:
+                self.last_update_time_hold = current_time
                 list_x = pos[0]
                 list_y = pos[1]
                 if b_type == 1:

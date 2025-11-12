@@ -2,6 +2,7 @@ import pygame
 import AirBlock
 import BaseBlock
 import time
+import random
 
 class SandBlock(BaseBlock.BaseBlock):
     def __init__(self, x, y, type):
@@ -26,13 +27,16 @@ class SandBlock(BaseBlock.BaseBlock):
             move_to(x, y + 1)
             return matrix
 
+        # elif  y < max_y and x < max_x and x > 0 and matrix[y + 1][x-1].type == 0:
+        #     sign = random.choice([-1,1])
+        #     move_to(x + sign, y + 1)
             # try down-left
-        elif y < max_y and x > 0 and matrix[y + 1][x-1].type == 0:
+        elif y < max_y and x > 0 and matrix[y + 1][x - 1].type == 0 and matrix[y][x - 1].type == 0:
             move_to(x-1, y + 1)
             return matrix
 
             # try down-right
-        elif y < max_y and x < max_x and matrix[y + 1][x + 1].type == 0:
+        elif y < max_y and x < max_x and matrix[y + 1][x + 1].type == 0 and matrix[y][x + 1].type == 0:
             move_to(x+1, y + 1)
             return matrix
 
