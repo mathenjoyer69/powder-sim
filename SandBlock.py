@@ -6,7 +6,7 @@ import random
 
 class SandBlock(BaseBlock.BaseBlock):
     def __init__(self, x, y, type):
-        super().__init__(x, y, (222, 186, 69),type)
+        super().__init__(x, y, (222, 186, 69), type)
         self.temp = 20
 
     def update(self, matrix):
@@ -25,20 +25,12 @@ class SandBlock(BaseBlock.BaseBlock):
 
         if y < max_y and matrix[y + 1][x].type == 0:
             move_to(x, y + 1)
-            return matrix
-
-        # elif  y < max_y and x < max_x and x > 0 and matrix[y + 1][x-1].type == 0:
-        #     sign = random.choice([-1,1])
-        #     move_to(x + sign, y + 1)
-            # try down-left
+            # try down left
         elif y < max_y and x > 0 and matrix[y + 1][x - 1].type == 0 and matrix[y][x - 1].type == 0:
-            move_to(x-1, y + 1)
-            return matrix
-
-            # try down-right
+            move_to(x - 1, y + 1)
+            # try down right
         elif y < max_y and x < max_x and matrix[y + 1][x + 1].type == 0 and matrix[y][x + 1].type == 0:
-            move_to(x+1, y + 1)
-            return matrix
+            move_to(x + 1, y + 1)
 
         return matrix
 

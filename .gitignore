@@ -1,0 +1,5 @@
+.vscode/settings.json
+__pycache__/AirBlock.cpython-313.pyc
+__pycache__/BaseBlock.cpython-313.pyc
+__pycache__/SandBlock.cpython-313.pyc
+__pycache__/StoneBlock.cpython-313.pyc
